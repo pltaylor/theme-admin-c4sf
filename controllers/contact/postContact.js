@@ -13,7 +13,7 @@ module.exports = {
 }
 
 function postContactsManage (req, res) {
-  var Contact = req.models.Contact
+  var Contact = req.models.Users
   
   var mongooseQuery = {}
   //  if (!res.locals.user.isAdmin()) {
@@ -22,20 +22,14 @@ function postContactsManage (req, res) {
   Contact.find(mongooseQuery, function (err, contacts) {
     if (err) console.error(err)
     contacts.forEach(function (contact) {
-      var contactInfo = req.body[contact.id]
-      if (contactInfo.delete) {
-        contact.remove()
-        return
-      }
-      contact.username = contactInfo.username
-      contact.profile.name = contactInfo.profile.name
-      contact.profile.showcontact = contactInfo.profile.showcontact
-      contact.profile.contactpagerank = contactInfo.profile.contactpagerank
+      var contactInfo = req.body[contact.username]
+      contact.profile.showcontact = contactInfo.showcontact
+      contact.profile.contactpagerank = contactInfo.contactrank
       contact.save(function (err) {
         if (err) throw err
       })
     })
   })
   req.flash('success', {msg: 'Success! You updated contacts.'})
-  return res.redirect('/contact/edit')
+  return res.redirect('contact/edit')
 }
