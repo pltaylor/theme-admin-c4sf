@@ -17,18 +17,17 @@ function postContactsManage (req, res) {
     if (err) console.error(err)
     users.forEach(function (user) {
       var userInfo = req.body[user.username]
-      if(!userInfo.showcontact){
+      if (!userInfo.showcontact) {
         user.profile.showcontact = false
-      }
-      else{
+      } else {
         user.profile.showcontact = true
       }
       user.profile.contactpagerank = userInfo.contactrank
       user.save(function (err) {
         if (err) throw err
+        req.flash('success', {msg: 'Success! You updated contacts.'})
       })
     })
   })
-  req.flash('success', {msg: 'Success! You updated contacts.'})
   return res.redirect('contact/edit')
 }
