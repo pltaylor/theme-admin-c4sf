@@ -9,22 +9,22 @@ module.exports = {
 }
 
 function postContactsManage (req, res) {
-  var Contact = req.models.Users
+  var Users = req.models.Users
 
   var mongooseQuery = {}
 
-  Contact.find(mongooseQuery, function (err, contacts) {
+  Users.find(mongooseQuery, function (err, users) {
     if (err) console.error(err)
-    contacts.forEach(function (contact) {
-      var contactInfo = req.body[contact.username]
-      if(!contactInfo.showcontact){
-        contact.profile.showcontact = false
+    users.forEach(function (user) {
+      var userInfo = req.body[user.username]
+      if(!userInfo.showcontact){
+        user.profile.showcontact = false
       }
       else{
-        contact.profile.showcontact = true
+        user.profile.showcontact = true
       }
-      contact.profile.contactpagerank = contactInfo.contactrank
-      contact.save(function (err) {
+      user.profile.contactpagerank = userInfo.contactrank
+      user.save(function (err) {
         if (err) throw err
       })
     })
