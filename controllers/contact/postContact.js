@@ -24,10 +24,16 @@ function postContactsManage (req, res) {
       }
       user.profile.contactpagerank = userInfo.contactrank
       user.save(function (err) {
-        if (err) throw err
+        if (err) {
+          // save failed
+          req.flash('errors', {msg: 'Error! Your Contacts were not updated. Error: ' + err})
+          console.log('User update failed.  Error:' + err)
+          return res.redirect('contact/edit')
+        }
+        // save is successfull.
         req.flash('success', {msg: 'Success! You updated contacts.'})
+        return res.redirect('contact/edit')
       })
     })
   })
-  return res.redirect('contact/edit')
 }
