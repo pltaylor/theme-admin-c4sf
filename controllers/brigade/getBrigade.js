@@ -19,7 +19,9 @@ module.exports = {
  */
 function getBrigade (req, res) {
   npmSearch.search('brigadehub-admin', {limit: 100}, function (err, adminModules) {
+    if (err) console.error(err)
     npmSearch.search('brigadehub-public', {limit: 100}, function (err, publicModules) {
+      if (err) console.error(err)
       res.render(res.theme.admin + '/views/brigade', {
         view: 'brigade-manage',
         title: 'Brigade',
