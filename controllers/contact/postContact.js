@@ -1,7 +1,3 @@
-var moment = require('moment')
-var uuid = require('node-uuid')
-require('moment-timezone')
-
 module.exports = {
   method: 'post',
   endpoint: '/contact',
@@ -14,16 +10,19 @@ module.exports = {
 
 function postContactsManage (req, res) {
   var Contact = req.models.Users
-  
+
   var mongooseQuery = {}
-  //  if (!res.locals.user.isAdmin()) {
-  //   //  mongooseQuery.author = res.locals.user.username
-  //  }
+
   Contact.find(mongooseQuery, function (err, contacts) {
     if (err) console.error(err)
     contacts.forEach(function (contact) {
       var contactInfo = req.body[contact.username]
-      contact.profile.showcontact = contactInfo.showcontact
+      if(!contactInfo.showcontact){
+        contact.profile.showcontact = false
+      }
+      else{
+        contact.profile.showcontact = true
+      }
       contact.profile.contactpagerank = contactInfo.contactrank
       contact.save(function (err) {
         if (err) throw err
