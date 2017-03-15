@@ -19,10 +19,8 @@ module.exports = {
  */
 function getBrigade (req, res) {
   npmSearch.search('brigadehub-admin', {limit: 100}, function (err, adminModules) {
-    console.log('Here are 100 adminModules', adminModules)
     npmSearch.search('brigadehub-public', {limit: 100}, function (err, publicModules) {
-      console.log('Here are 100 publicModules', publicModules)
-      res.render(res.theme.admin +'/views/brigade', {
+      res.render(res.theme.admin + '/views/brigade', {
         view: 'brigade-manage',
         title: 'Brigade',
         brigade: res.locals.brigade,
