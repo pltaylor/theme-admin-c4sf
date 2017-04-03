@@ -33,10 +33,9 @@ function postEventsManage (req, res) {
         if (err) {
           req.flash('errors', { msg: err.message })
           return res.redirect('/admin/events/manage/')
-        } else {
-          req.flash('success', {msg: 'Success! You updated events.'})
-          return res.redirect('/admin/events/manage/')
         }
+        req.flash('success', {msg: 'Success! You updated events.'})
+        return res.redirect('/admin/events/manage/')
       })
     })
   })
