@@ -22,14 +22,15 @@ function getBrigade (req, res) {
     if (err) console.error(err)
     npmSearch.search('brigadehub-public', { limit: 100 }, function (err, publicModules) {
       if (err) console.error(err)
-      var brigadeModel = res.locals.brigade
-      var containsMain = false
-      for (var i = 0, len = brigadeModel.sponsors.length; i < len; i++) {
+      const brigadeModel = res.locals.brigade
+      for (let i = 0, len = brigadeModel.sponsors.length; i < len; i++) {
         if (brigadeModel.sponsors[i].main === true) {
-          containsMain = true
+          brigadeModel.ContainsMainSponsor = true
+        } else {
+          brigadeModel.ContainsMainSponsor = false
         }
       }
-      brigadeModel.ContainsMainSponsor = containsMain
+
       res.render(res.theme.admin + '/views/brigade', {
         view: 'brigade-manage',
         title: 'Brigade',
