@@ -20,12 +20,14 @@ function getProjectsIDSettings (req, res) {
     if (err) {
       req.flash('errors', { msg: `There was an error retrieving the Project.  error: ${err.message}` })
       console.error(err)
+      return res.redirect('/projects')
     }
     foundProject.repositories = foundProject.repositories || []
     Users.find({}, function (err, allUsers) {
       if (err) {
-        req.flash('errors', { msg: `There was an error retrieving the users.  error: ${err.message}` })
+        req.flash('errors', { msg: `There was an error retrieving the users for the project.  error: ${err.message}` })
         console.error(err)
+        return res.redirect('/projects')
       }
       res.render(res.theme.admin + '/views/projects/settings', {
         view: 'project-settings',
