@@ -16,11 +16,17 @@ function getProjectsIDSettings (req, res) {
   }
   var Projects = req.models.Projects
   var Users = req.models.Users
-  Projects.findOne({'id': req.params.projectId}, function (err, foundProject) {
-    if (err) console.error(err)
+  Projects.findOne({ 'id': req.params.projectId }, function (err, foundProject) {
+    if (err) {
+      req.flash('errors', { msg: `There was an error retrieving the Project.  error: ${err.message}` })
+      console.error(err)
+    }
     foundProject.repositories = foundProject.repositories || []
     Users.find({}, function (err, allUsers) {
-      if (err) console.error(err)
+      if (err) {
+        req.flash('errors', { msg: `There was an error retrieving the users.  error: ${err.message}` })
+        console.error(err)
+      }
       res.render(res.theme.admin + '/views/projects/settings', {
         view: 'project-settings',
         project: foundProject,
