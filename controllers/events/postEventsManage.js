@@ -44,7 +44,7 @@ function postEventsManage (req, res) {
       req.flash('success', { msg: 'Success! You updated events.' })
       return res.redirect('/admin/events/manage/')
     }).catch(function (err) {
-      req.flash('errors', { msg: 'Error! Your Contacts were not updated. Error: ' + err.message })
+      req.flash('errors', { msg: 'Error! Your Events were not updated. Error: ' + err.message })
       console.log('Event update failed.  Error:' + err)
       return res.redirect('/admin/events/manage/')
     })
